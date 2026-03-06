@@ -127,6 +127,10 @@ crime-intelligence-assistant/
 ## 📸 Screenshots
 
 > _Upload screenshots of the dashboard, chat responses, and evidence processing here._
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/507368c2-2ce0-4d9d-9b18-6dd78c99ac80" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/72c4cf03-20b5-4780-a304-b57804ea1fd1" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/b2d84439-e3a7-4f98-954a-564b4b39d59c" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/6c5a52d5-cb22-49ee-bc03-50f992ab12b2" />
 
 ---
 
