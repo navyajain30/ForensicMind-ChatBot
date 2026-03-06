@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com;">
+    <title>ForensicMind — AI Crime Intelligence System</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+
+    <!-- Typography: Syne (headings) + DM Sans (body) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <!-- ═══════════════════ APP SHELL ═══════════════════ -->
+    <div class="forensic-app">
+
+        <!-- ── HEADER ────────────────────────────────────────────── -->
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <i data-lucide="scan-eye"></i>
+                </div>
+                <div>
+                    <h1 class="brand-name">ForensicMind</h1>
+                    <p class="brand-sub">AI Crime Intelligence System</p>
+                </div>
+            </div>
+
+            <div class="header-badges">
+                <div class="badge badge-case" id="caseIdBadge" style="display:none;">
+                    <i data-lucide="hash"></i>
+                    <span id="caseIdText">—</span>
+                </div>
+                <div class="badge badge-status" id="statusBadge">
+                    <span class="pulse-dot"></span>
+                    <span id="systemStatus">Ready</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ── MAIN LAYOUT ─────────────────────────────────────────── -->
+        <div class="app-body">
+
+            <!-- ══ SIDEBAR ══ -->
+            <aside class="sidebar glass-panel">
+
+                <!-- Upload Zone -->
+                <div class="sidebar-section">
+                    <p class="sidebar-label"><i data-lucide="upload-cloud"></i> Upload Evidence</p>
+                    <div class="drop-zone" id="dropZone">
+                        <input type="file" id="fileInput" multiple accept=".pdf,.png,.jpg,.jpeg,.txt"
+                            style="display:none;">
+                        <div class="drop-icon"><i data-lucide="file-plus-2"></i></div>
+                        <p class="drop-title">Drag & Drop files here</p>
+                        <p class="drop-sub">FIR · Witness Statements · Images</p>
+                        <button type="button" class="btn-browse" onclick="document.getElementById('fileInput').click()">
+                            Browse Files
+                        </button>
+                    </div>
+                    <!-- Selected files preview -->
+                    <div id="filePreview" class="file-preview-list" style="display:none;"></div>
+                </div>
+
+                <!-- Case Metadata Form -->
+                <form id="metadataForm" class="sidebar-section">
+                    <p class="sidebar-label"><i data-lucide="folder-open"></i> Case Metadata</p>
+
+                    <div class="input-group">
+                        <i data-lucide="map-pin" class="input-icon"></i>
+                        <input type="text" id="caseLocation" placeholder="Location (e.g., Delhi)" class="fm-input"
+                            autocomplete="off">
+                    </div>
+
+                    <div class="input-group">
+                        <i data-lucide="calendar" class="input-icon"></i>
+                        <input type="number" id="caseYear" placeholder="Year (e.g., 2024)" class="fm-input" min="2000"
+                            max="2099">
+                    </div>
+
+                    <div class="input-group">
+                        <i data-lucide="tag" class="input-icon"></i>
+                        <select id="crimeType" class="fm-input fm-select">
+                            <option value="">Select Crime Type</option>
+                            <option value="theft">Theft / Burglary</option>
+                            <option value="robbery">Robbery / Dacoity</option>
+                            <option value="assault">Assault / Battery</option>
+                            <option value="homicide">Homicide / Murder</option>
+                            <option value="fraud">Fraud / Cyber Crime</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-full" id="processBtn">
+                        <i data-lucide="cpu"></i>
+                        <span>Process Evidence</span>
+                    </button>
+                </form>
+
+                <!-- Tools -->
+                <div class="sidebar-section">
+                    <p class="sidebar-label"><i data-lucide="wrench"></i> Tools</p>
+                    <button class="btn-tool" id="btnAdminOverview">
+                        <i data-lucide="bar-chart-2"></i>
+                        <span>Evaluation Metrics</span>
+                    </button>
+                    <button class="btn-tool" id="btnExportReport">
+                        <i data-lucide="file-down"></i>
+                        <span>Export Case Report</span>
+                    </button>
+                </div>
+
+            </aside>
+
+            <!-- ══ CHAT PANEL ══ -->
+            <main class="chat-panel">
+
+                <!-- Case Summary Card (shown after upload) -->
+                <div class="case-summary-card" id="caseSummaryCard" style="display:none;">
+                    <div class="cs-header">
+                        <i data-lucide="clipboard-list"></i>
+                        <span>Case Summary</span>
+                    </div>
+                    <div class="cs-body" id="caseSummaryBody"></div>
+                </div>
+
+                <!-- Message history -->
+                <div class="chat-history" id="chatHistory">
+
+                    <!-- Welcome state -->
+                    <div class="welcome-state" id="welcomeState">
+                        <div class="welcome-icon"><i data-lucide="scan-eye"></i></div>
+                        <h2 class="welcome-title">ForensicMind Intelligence System</h2>
+                        <p class="welcome-sub">Upload FIR documents and witness statements to begin extracting
+                            timelines, mapping IPC sections, and generating investigative insights.</p>
+                    </div>
+
+                    <!-- Suggestion chips (shown after case loaded, no messages yet) -->
+                    <div class="suggestion-chips" id="suggestionChips" style="display:none;">
+                        <p class="chips-label">Suggested queries</p>
+                        <div class="chips-grid">
+                            <button class="chip" data-query="Which IPC sections apply to this case?">⚖️ Which IPC
+                                sections apply?</button>
+                            <button class="chip" data-query="Summarize the key evidence in this case.">📋 Summarize case
+                                evidence</button>
+                            <button class="chip" data-query="What inconsistencies exist in the witness statement?">🔍
+                                Check witness inconsistencies</button>
+                            <button class="chip" data-query="What crime type does this evidence suggest?">🏷️ Identify
+                                crime type</button>
+                            <button class="chip" data-query="Who is the main suspect based on the evidence?">👤 Identify
+                                suspect</button>
+                            <button class="chip" data-query="Create a timeline of events from the evidence.">🕐 Build
+                                event timeline</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Chat Input -->
+                <form class="chat-input-bar" id="chatForm">
+                    <div class="rag-mode-bar">
+                        <span class="rag-mode-label">RAG Mode:</span>
+                        <button type="button" class="rag-toggle" id="ragModeToggle" data-mode="basic">
+                            <span class="rag-indicator"></span>
+                            <span id="ragModeText">Basic RAG</span>
+                        </button>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="chatInput" class="chat-input"
+                            placeholder="Ask about the case — e.g., 'What IPC sections apply?'" autocomplete="off">
+                        <button type="submit" class="btn-send" id="sendBtn" title="Send">
+                            <i data-lucide="send"></i>
+                        </button>
+                    </div>
+                </form>
+
+            </main>
+        </div><!-- /.app-body -->
+
+    </div><!-- /.forensic-app -->
+
+    <!-- Context panel (kept for compatibility) -->
+    <div id="contextPanel" class="hidden"></div>
+
+    <script src="js/app.js"></script>
+    <script>
+        if (window.lucide) window.lucide.createIcons();
+    </script>
+
+</body>
+
+</html>

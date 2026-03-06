@@ -1,0 +1,177 @@
+{
+    "302": {
+        "title": "Murder",
+        "description": "Whoever commits murder shall be punished with death, or imprisonment for life, and shall also be liable to fine.",
+        "category": "homicide"
+    },
+    "304": {
+        "title": "Culpable Homicide Not Amounting to Murder",
+        "description": "Whoever commits culpable homicide not amounting to murder shall be punished with imprisonment for life, or imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
+        "category": "homicide"
+    },
+    "307": {
+        "title": "Attempt to Murder",
+        "description": "Whoever does any act with such intention or knowledge, and under such circumstances that, if he by that act caused death, he would be guilty of murder.",
+        "category": "homicide"
+    },
+    "319": {
+        "title": "Hurt",
+        "description": "Whoever causes bodily pain, disease or infirmity to any person is said to cause hurt.",
+        "category": "assault"
+    },
+    "320": {
+        "title": "Grievous Hurt",
+        "description": "Emasculation, permanent privation of sight or hearing, destruction of any member or joint, permanent disfiguration of head or face, fracture or dislocation of bone or tooth.",
+        "category": "assault"
+    },
+    "323": {
+        "title": "Punishment for Voluntarily Causing Hurt",
+        "description": "Whoever voluntarily causes hurt shall be punished with imprisonment of either description for a term which may extend to one year, or with fine which may extend to one thousand rupees, or with both.",
+        "category": "assault"
+    },
+    "324": {
+        "title": "Voluntarily Causing Hurt by Dangerous Weapons",
+        "description": "Whoever voluntarily causes hurt by means of any instrument for shooting, stabbing or cutting or by fire or heated substance.",
+        "category": "assault"
+    },
+    "341": {
+        "title": "Punishment for Wrongful Restraint",
+        "description": "Whoever wrongfully restrains any person shall be punished with simple imprisonment for a term which may extend to one month, or with fine which may extend to five hundred rupees, or with both.",
+        "category": "assault"
+    },
+    "351": {
+        "title": "Assault",
+        "description": "Whoever makes any gesture or any preparation intending or knowing it to be likely that such gesture or preparation will cause any person present to apprehend that he who makes that gesture is about to use criminal force to that person.",
+        "category": "assault"
+    },
+    "354": {
+        "title": "Assault on Woman with Intent to Outrage Modesty",
+        "description": "Whoever assaults or uses criminal force to any woman, intending to outrage or knowing it to be likely that he will thereby outrage her modesty.",
+        "category": "assault"
+    },
+    "354A": {
+        "title": "Sexual Harassment",
+        "description": "A man committing acts of physical contact and advances involving unwelcome and explicit sexual overtures, or a demand or request for sexual favours.",
+        "category": "assault"
+    },
+    "375": {
+        "title": "Rape",
+        "description": "A man is said to commit rape who has sexual intercourse with a woman against her will or without her consent.",
+        "category": "assault"
+    },
+    "376": {
+        "title": "Punishment for Rape",
+        "description": "Whoever commits rape shall be punished with rigorous imprisonment of either description for a term which shall not be less than seven years.",
+        "category": "assault"
+    },
+    "378": {
+        "title": "Theft",
+        "description": "Whoever intending to take dishonestly any moveable property out of the possession of any person without that person's consent moves that property.",
+        "category": "theft"
+    },
+    "379": {
+        "title": "Punishment for Theft",
+        "description": "Whoever commits theft shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.",
+        "category": "theft"
+    },
+    "380": {
+        "title": "Theft in Dwelling House",
+        "description": "Whoever commits theft in any building, tent or vessel, which building, tent or vessel is used as a human dwelling, or used for the custody of property, shall be punished with imprisonment of either description for a term which may extend to seven years.",
+        "category": "theft"
+    },
+    "382": {
+        "title": "Theft After Preparation to Cause Death or Hurt",
+        "description": "Whoever commits theft, having made preparation for causing death, or hurt, or restraint, or fear of death, or of hurt, or of restraint, to any person.",
+        "category": "theft"
+    },
+    "383": {
+        "title": "Extortion",
+        "description": "Whoever intentionally puts any person in fear of any injury to that person or to any other, and thereby dishonestly induces the person so put in fear to deliver to any person any property.",
+        "category": "robbery"
+    },
+    "384": {
+        "title": "Punishment for Extortion",
+        "description": "Whoever commits extortion shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.",
+        "category": "robbery"
+    },
+    "390": {
+        "title": "Robbery",
+        "description": "In all robbery there is either theft or extortion. Theft is robbery if, in order to the committing of the theft, or in committing the theft, or in carrying away or attempting to carry away property obtained by the theft, the offender voluntarily causes or attempts to cause to any person, death or hurt or wrongful restraint.",
+        "category": "robbery"
+    },
+    "392": {
+        "title": "Punishment for Robbery",
+        "description": "Whoever commits robbery shall be punished with rigorous imprisonment for a term which may extend to ten years, and shall also be liable to fine.",
+        "category": "robbery"
+    },
+    "395": {
+        "title": "Dacoity",
+        "description": "Whoever commits dacoity shall be punished with imprisonment for life, or with rigorous imprisonment for a term which may extend to ten years, and shall also be liable to fine.",
+        "category": "robbery"
+    },
+    "396": {
+        "title": "Dacoity with Murder",
+        "description": "If any one of five or more persons who are conjointly committing dacoity, commits murder in so committing dacoity, every one of those persons shall be punished with death.",
+        "category": "homicide"
+    },
+    "406": {
+        "title": "Criminal Breach of Trust",
+        "description": "Whoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.",
+        "category": "fraud"
+    },
+    "415": {
+        "title": "Cheating",
+        "description": "Whoever, by deceiving any person, fraudulently or dishonestly induces the person so deceived to deliver any property to any person.",
+        "category": "fraud"
+    },
+    "417": {
+        "title": "Punishment for Cheating",
+        "description": "Whoever cheats shall be punished with imprisonment of either description for a term which may extend to one year, or with fine, or with both.",
+        "category": "fraud"
+    },
+    "419": {
+        "title": "Punishment for Cheating by Personation",
+        "description": "Whoever cheats by personation shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.",
+        "category": "fraud"
+    },
+    "420": {
+        "title": "Cheating and Dishonestly Inducing Delivery of Property",
+        "description": "Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person shall be punished with imprisonment of either description for a term which may extend to seven years.",
+        "category": "fraud"
+    },
+    "420A": {
+        "title": "Cyber Fraud / Online Cheating",
+        "description": "Cheating or fraud committed through electronic means, including phishing, OTP fraud, online impersonation, and digital financial deception.",
+        "category": "fraud"
+    },
+    "467": {
+        "title": "Forgery of Valuable Security",
+        "description": "Whoever forges a document which purports to be a valuable security or a will, or an authority to adopt a son, or which purports to give authority to any person to make or transfer any valuable security.",
+        "category": "fraud"
+    },
+    "468": {
+        "title": "Forgery for Purpose of Cheating",
+        "description": "Whoever commits forgery, intending that the document or electronic record forged shall be used for the purpose of cheating.",
+        "category": "fraud"
+    },
+    "498A": {
+        "title": "Husband or Relative of Husband Cruelty to Wife",
+        "description": "Whoever, being the husband or the relative of the husband of a woman, subjects such woman to cruelty shall be punished.",
+        "category": "assault"
+    },
+    "504": {
+        "title": "Intentional Insult to Provoke Breach of Peace",
+        "description": "Whoever intentionally insults, and thereby gives provocation to any person, intending or knowing it to be likely that such provocation will cause him to break the public peace, or to commit any other offence.",
+        "category": "other"
+    },
+    "506": {
+        "title": "Criminal Intimidation",
+        "description": "Whoever commits the offence of criminal intimidation shall be punished with imprisonment of either description for a term which may extend to two years, or with fine, or with both.",
+        "category": "other"
+    },
+    "511": {
+        "title": "Punishment for Attempting to Commit Offences",
+        "description": "Whoever attempts to commit an offence punishable by this Code with imprisonment for life or imprisonment, or to cause such an offence to be committed, and in such attempt does any act towards the commission of the offence.",
+        "category": "other"
+    }
+}

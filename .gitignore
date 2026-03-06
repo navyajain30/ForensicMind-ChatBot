@@ -1,0 +1,40 @@
+# ── Environment & Secrets ─────────────────────────────────────────
+.env
+*.env
+.env.*
+!.env.example
+
+# ── Python ────────────────────────────────────────────────────────
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.so
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ── Vector Store & Uploads ────────────────────────────────────────
+temp_uploads/
+chroma_db_store/
+chroma_db_storage/
+
+# ── Logs ──────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── OS & Editor ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Node ──────────────────────────────────────────────────────────
+node_modules/
