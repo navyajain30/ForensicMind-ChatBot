@@ -3,7 +3,6 @@ import os
 from rag.vector_store import basic_search
 from utils.llm import llm_service
 
-# ── Load IPC knowledge base once at module import ─────────────────────────────
 _IPC_DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "ipc_sections.json")
 with open(_IPC_DB_PATH, "r", encoding="utf-8") as f:
     IPC_DATABASE = json.load(f)
@@ -25,8 +24,6 @@ CATEGORY_KEYWORDS = {
     "fraud":    ["cheated", "fraud", "scam", "fake", "forged", "phishing", "otp", "cyber", "online"],
 }
 
-# ── Legal-intent keywords ──────────────────────────────────────────────────────
-# These signal the user is specifically asking for IPC / legal analysis.
 _LEGAL_KEYWORDS = [
     "ipc", "section", "legal", "law", "penal", "punish", "offence", "offense",
     "charge", "arrest", "bail", "court", "warrant", "fir", "cognizable",
@@ -74,9 +71,6 @@ def _get_ipc_sections_for_category(category: str, context: str) -> list:
     return sorted(matching, key=relevance, reverse=True)[:3]
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# MAIN RAG FUNCTION
-# ─────────────────────────────────────────────────────────────────────────────
 
 def generate_basic_rag_response(query: str, case_id: str = None) -> dict:
     """

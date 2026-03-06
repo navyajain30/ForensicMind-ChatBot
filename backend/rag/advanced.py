@@ -34,15 +34,11 @@ from rag.basic import (          # reuse IPC logic from basic.py — no duplicat
     IPC_DATABASE,
 )
 
-# ── Constants ──────────────────────────────────────────────────────────────────
-N_PER_QUERY = 5    # chunks to fetch per query variant
-N_FINAL     = 5    # top chunks to keep after re-ranking
-N_VARIANTS  = 3    # number of multi-query variants to generate
+N_PER_QUERY = 5    
+N_FINAL     = 5    
+N_VARIANTS  = 3   
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# STEP 1 — HyDE: Generate a hypothetical answer
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _generate_hypothetical_answer(query: str) -> str | None:
     """
@@ -62,10 +58,6 @@ def _generate_hypothetical_answer(query: str) -> str | None:
         return None       # fall back to raw query if LLM unavailable
     return hypothesis.strip()
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# STEP 2 — Multi-Query: Generate query variants
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _generate_query_variants(query: str) -> list[str]:
     """
@@ -104,10 +96,6 @@ def _generate_query_variants(query: str) -> list[str]:
     return all_variants[:N_VARIANTS + 1]                     # +1 for the original
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# STEP 3 — Multi-query retrieval + deduplication
-# ─────────────────────────────────────────────────────────────────────────────
-
 def _multi_query_retrieve(queries: list[str], case_id: str | None) -> list[dict]:
     """
     Run ChromaDB search for each query variant.
@@ -143,9 +131,6 @@ def _multi_query_retrieve(queries: list[str], case_id: str | None) -> list[dict]
     return all_chunks
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# STEP 4 — Re-ranking
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _rerank(chunks: list[dict], query: str, hypothesis: str | None) -> list[dict]:
     """
@@ -180,9 +165,6 @@ def _rerank(chunks: list[dict], query: str, hypothesis: str | None) -> list[dict
     return ranked[:N_FINAL]
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# MAIN ENTRY POINT
-# ─────────────────────────────────────────────────────────────────────────────
 
 def generate_advanced_rag_response(query: str, case_id: str = None) -> dict:
     """
@@ -193,14 +175,14 @@ def generate_advanced_rag_response(query: str, case_id: str = None) -> dict:
       { answer, sources, crime_type, confidence, ipc_sections, timeline }
     """
 
-    # ── 1. HyDE ───────────────────────────────────────────────────────────────
+    
     hypothesis = None
     try:
         hypothesis = _generate_hypothetical_answer(query)
     except Exception:
         pass   # non-fatal; re-ranker works without it
 
-    # ── 2. Build query set (original + variants + hypothesis) ─────────────────
+   
     try:
         variants = _generate_query_variants(query)
     except Exception:
@@ -208,7 +190,7 @@ def generate_advanced_rag_response(query: str, case_id: str = None) -> dict:
 
     search_queries = list(dict.fromkeys(variants + ([hypothesis] if hypothesis else [])))
 
-    # ── 3. Multi-query retrieval ───────────────────────────────────────────────
+   
     chunks = _multi_query_retrieve(search_queries, case_id)
 
     if not chunks:
@@ -232,12 +214,12 @@ def generate_advanced_rag_response(query: str, case_id: str = None) -> dict:
             "ipc_sections": [], "timeline": [],
         }
 
-    # ── 4. Re-rank ────────────────────────────────────────────────────────────
+    
     top_chunks = _rerank(chunks, query, hypothesis)
 
     context = "\n\n---\n\n".join(c["text"] for c in top_chunks)
 
-    # ── 5. IPC analysis (only if query asks for it) ────────────────────────────
+   
     legal_query  = _is_legal_query(query)
     crime_type   = None
     confidence   = None
@@ -277,7 +259,6 @@ def generate_advanced_rag_response(query: str, case_id: str = None) -> dict:
             f"QUESTION: {query}"
         )
 
-    # ── 6. Generate final answer ───────────────────────────────────────────────
     answer, is_error = llm_service.generate(system_prompt, user_prompt)
 
     if is_error:
@@ -290,7 +271,6 @@ def generate_advanced_rag_response(query: str, case_id: str = None) -> dict:
             f"{answer}\n\n**Top Retrieved Chunks (re-ranked):**\n{chunks_summary}"
         )
 
-    # ── 7. Format sources ─────────────────────────────────────────────────────
     sources = [
         {
             "chunk_text": c["text"][:150] + "...",

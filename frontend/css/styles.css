@@ -1,10 +1,3 @@
-/* ═══════════════════════════════════════════════════════════════════
-   ForensicMind — AI Crime Intelligence System
-   Design System & Component Styles
-   Theme: Dark Tactical Intelligence Dashboard
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ── Design Tokens ────────────────────────────────────────────── */
 :root {
     --bg-0: #060911;
     --bg-1: #0a0f1e;
@@ -41,7 +34,7 @@
     --transition: 0.2s ease;
 }
 
-/* ── Reset & Base ─────────────────────────────────────────────── */
+
 *,
 *::before,
 *::after {
@@ -76,7 +69,6 @@ body::before {
     z-index: 0;
 }
 
-/* ── App Shell ────────────────────────────────────────────────── */
 .forensic-app {
     display: flex;
     flex-direction: column;
@@ -85,7 +77,6 @@ body::before {
     z-index: 1;
 }
 
-/* ── Header ───────────────────────────────────────────────────── */
 .app-header {
     height: var(--header-h);
     display: flex;
@@ -1185,12 +1176,10 @@ body::before {
     height: 16px;
 }
 
-/* ── Scroll to bottom helper ──────────────────────────────────── */
 .spacer {
     flex: 1;
 }
 
-/* ── Animations ───────────────────────────────────────────────── */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -1301,7 +1290,6 @@ body::before {
     height: 16px;
 }
 
-/* ── RAG Mode Toggle ──────────────────────────────────────────── */
 .rag-mode-bar {
     display: flex;
     align-items: center;

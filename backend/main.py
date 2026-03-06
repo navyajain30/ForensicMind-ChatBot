@@ -31,9 +31,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve the frontend from FastAPI — eliminates Live Server dependency.
-# index.html uses relative paths like css/styles.css and js/app.js,
-# so we mount each subfolder at the matching root path.
 FRONTEND_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
 if os.path.exists(FRONTEND_DIR):
     app.mount("/css", StaticFiles(directory=os.path.join(FRONTEND_DIR, "css")), name="css")
@@ -77,13 +74,8 @@ async def upload_evidence(
     Extracts text/visuals and ingests into Vector Store.
     """
 
-    # FIX #1: Generate a single stable case_id for the entire upload batch.
-    # Previously, case_id was built inside the file loop using the filename,
-    # so it changed with every file — causing inconsistent vector metadata.
     case_id = f"CASE-{year}-{location[:3].upper()}-{str(uuid.uuid4())[:8].upper()}"
 
-    # Use system temp directory (outside backend/) so WatchFiles/uvicorn
-    # never detects the saved files and restarts the server mid-upload.
     upload_dir = os.path.join(tempfile.gettempdir(), "crime_intel_uploads", case_id)
     os.makedirs(upload_dir, exist_ok=True)
 
@@ -204,20 +196,7 @@ async def chat(request: ChatQuery):
 
 
 if __name__ == "__main__":
-    # FIX #3 — THE CRITICAL FIX that stops the "UI reset" bug:
-    #
-    # reload_dirs tells WatchFiles to ONLY watch these source code directories.
-    # reload_excludes explicitly ignores data directories.
-    #
-    # Without this, the sequence was:
-    #   1. Frontend POST /upload
-    #   2. Backend saves file to temp_uploads/    ← WatchFiles detects change
-    #   3. Uvicorn restarts                       ← HTTP connection drops
-    #   4. fetch() throws NetworkError in browser
-    #   5. catch() fires alert(), state is lost   ← looks like "page reset"
-    #
-    # With this fix, saving files to temp_uploads/ or chroma_db_store/
-    # no longer triggers a reload. Only changes to .py source files do.
+
     uvicorn.run(
         "main:app",
         host="0.0.0.0",

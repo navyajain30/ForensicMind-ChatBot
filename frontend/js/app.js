@@ -1,19 +1,8 @@
-/**
- * ForensicMind — AI Crime Intelligence System
- * Frontend Application Logic
- *
- * Backend API (preserved exactly):
- *   POST /upload   { files, location, year, crime_type }
- *   POST /chat     { query, case_id, advanced_rag }
- *   GET  /evaluate
- */
 
 "use strict";
 
-// ── API Base ──────────────────────────────────────────────────────
 const API_BASE = window.location.port === "8000" ? "" : "http://127.0.0.1:8000";
 
-// ── File type → icon mapping ──────────────────────────────────────
 function fileIcon(name) {
     const ext = (name || "").split(".").pop().toLowerCase();
     if (ext === "pdf") return "📄";
@@ -28,14 +17,12 @@ function fileSize(bytes) {
     return (bytes / (1024 * 1024)).toFixed(1) + " MB";
 }
 
-// ── State ─────────────────────────────────────────────────────────
 let currentCaseId = sessionStorage.getItem("currentCaseId") || null;
 let currentCaseMeta = JSON.parse(sessionStorage.getItem("currentCaseMeta") || "null");
 let selectedFiles = [];
 let isSubmitting = false;
 let chatHasMessages = false;
 
-// Accumulated case data for PDF export
 const caseReport = {
     messages: [],   // { role, text }
     sources: [],
@@ -44,7 +31,7 @@ const caseReport = {
     confidence: null,
 };
 
-// ── DOM References ────────────────────────────────────────────────
+
 document.addEventListener("DOMContentLoaded", () => {
     const $ = id => document.getElementById(id);
 
@@ -68,17 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const welcomeState = $("welcomeState");
     const suggestionChips = $("suggestionChips");
 
-    // Restore session state
     if (currentCaseId) {
         showCaseBadge(currentCaseId);
         setStatus("Evidence Processed", "ready");
         if (currentCaseMeta) showCaseSummaryCard(currentCaseMeta);
         showSuggestionChips();
     }
-
-    // ══════════════════════════════════════════════════════════════
-    // FILE HANDLING
-    // ══════════════════════════════════════════════════════════════
 
     function addFiles(newFiles) {
         const arr = Array.from(newFiles);
@@ -121,9 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
     });
 
-    // ══════════════════════════════════════════════════════════════
-    // UPLOAD / PROCESS EVIDENCE
-    // ══════════════════════════════════════════════════════════════
 
     metadataForm.addEventListener("submit", async e => {
         e.preventDefault();
@@ -184,9 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ══════════════════════════════════════════════════════════════
-    // RAG MODE TOGGLE
-    // ══════════════════════════════════════════════════════════════
 
     let advancedRagMode = false;
     const ragModeToggle = document.getElementById("ragModeToggle");
@@ -200,9 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ══════════════════════════════════════════════════════════════
-    // CHAT
-    // ══════════════════════════════════════════════════════════════
 
     chatForm.addEventListener("submit", async e => {
         e.preventDefault();
@@ -260,10 +233,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-    // ══════════════════════════════════════════════════════════════
-    // RENDER: APPEND MESSAGES
-    // ══════════════════════════════════════════════════════════════
 
     function appendUserMsg(text) {
         chatHasMessages = true;
@@ -385,9 +354,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.lucide) window.lucide.createIcons();
     }
 
-    // ══════════════════════════════════════════════════════════════
-    // THINKING ANIMATION (multi-step)
-    // ══════════════════════════════════════════════════════════════
 
     function appendThinking(steps = ["Analyzing…", "Retrieving…", "Generating…"]) {
         const id = "think-" + Date.now();
@@ -433,9 +399,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (el) el.remove();
     }
 
-    // ══════════════════════════════════════════════════════════════
-    // EVALUATION METRICS BUTTON
-    // ══════════════════════════════════════════════════════════════
 
     const adminBtn = $("btnAdminOverview");
     if (adminBtn) {
@@ -496,10 +459,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-    // ══════════════════════════════════════════════════════════════
-    // EXPORT CASE REPORT (PDF)
-    // ══════════════════════════════════════════════════════════════
 
     const exportBtn = $("btnExportReport");
     if (exportBtn) {
@@ -626,10 +585,6 @@ document.addEventListener("DOMContentLoaded", () => {
         appendSystemMsg("📄 Case report exported as PDF successfully.");
     }
 
-    // ══════════════════════════════════════════════════════════════
-    // UI HELPERS
-    // ══════════════════════════════════════════════════════════════
-
     function showCaseBadge(caseId) {
         caseIdBadge.style.display = "flex";
         caseIdText.textContent = caseId.substring(0, 20) + (caseId.length > 20 ? "…" : "");
@@ -672,6 +627,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .replace(/"/g, "&quot;");
     }
 
-    // Init icons after everything is rendered
+
     if (window.lucide) window.lucide.createIcons();
 });

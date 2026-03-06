@@ -14,14 +14,10 @@ Or via the FastAPI endpoint:
 import os
 import sys
 
-# Allow running directly: python -m evaluation.evaluate_rag
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from rag.vector_store import basic_search
 
-# ─────────────────────────────────────────────────────────────────────────────
-# GOLDEN EVALUATION DATASET
-# ─────────────────────────────────────────────────────────────────────────────
 GOLDEN_DATASET = [
     {"query": "What time did the robbery occur?",              "relevant_sources": ["FIR.txt"]},
     {"query": "Who witnessed the crime?",                      "relevant_sources": ["witness.txt"]},
@@ -34,11 +30,6 @@ GOLDEN_DATASET = [
 ]
 
 N_RESULTS = 3  # chunks retrieved per query
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# METRIC HELPERS
-# ─────────────────────────────────────────────────────────────────────────────
 
 def _retrieved_sources(query: str) -> list:
     try:
@@ -71,11 +62,6 @@ def _reciprocal_rank(retrieved: list, relevant: list) -> float:
         if src in rel_lower:
             return 1.0 / rank
     return 0.0
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# MAIN EVALUATION
-# ─────────────────────────────────────────────────────────────────────────────
 
 def run_evaluation() -> dict:
     """Run evaluation and return dict with precision, recall, mrr."""
