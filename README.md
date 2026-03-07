@@ -133,7 +133,3 @@ crime-intelligence-assistant/
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/6c5a52d5-cb22-49ee-bc03-50f992ab12b2" />
 
 ---
-
-## 📄 License
-
-MIT License — feel free to fork, modify, and build on this project.
